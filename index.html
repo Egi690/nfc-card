@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>vCard Generator</title>
+</head>
+<body>
+  <h2>vCard Generator</h2>
+
+  <input id="fn" placeholder="First Name"><br>
+  <input id="ln" placeholder="Last Name"><br>
+  <input id="phone" placeholder="Phone"><br>
+  <input id="email" placeholder="Email"><br>
+  <input id="company" placeholder="Company"><br>
+  <button onclick="generate()">Generate vCard</button>
+
+  <script>
+    function generate() {
+      const fn = document.getElementById("fn").value;
+      const ln = document.getElementById("ln").value;
+      const phone = document.getElementById("phone").value;
+      const email = document.getElementById("email").value;
+      const company = document.getElementById("company").value;
+
+      const vcard =
+`BEGIN:VCARD
+VERSION:3.0
+N:${ln};${fn};;;
+FN:${fn} ${ln}
+ORG:${company}
+TEL;TYPE=CELL:${phone}
+EMAIL:${email}
+END:VCARD`;
+
+      const blob = new Blob([vcard], { type: "text/vcard" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "contact.vcf";
+      link.click();
+    }
+  </script>
+</body>
+</html>
